@@ -2,29 +2,31 @@ package org.uade.dynamic;
 
 import org.uade.adt.definitions.IDictionary;
 import org.uade.adt.node.DictionaryNode;
+import org.uade.dynamic.definitions.IGenericDictionary;
+import org.uade.dynamic.node.GenericDictionaryNode;
 
-public class Dictionary implements IDictionary {
+public class GenericDictionary<T> implements IGenericDictionary<T> {
 
-    private DictionaryNode first;
+    private GenericDictionaryNode<T> first;
     private int size;
 
-    public Dictionary() {
+    public GenericDictionary() {
         size = 0;
     }
 
     @Override
-    public void add(int key, int value) {
-        DictionaryNode index = indexOfKey(key);
+    public void add(T key, T value) {
+        GenericDictionaryNode<T> index = indexOfKey(key);
         if (index != null) {
             index.setValue(value); // Si la key ya existe, se reemplaza el value
             return;
         }
-        index.setNext(new DictionaryNode(key, value, null));
+        index.setNext(new GenericDictionaryNode<T>(key, value, null));
         size++;
     }
 
     @Override
-    public void remove(int key, int value) {
+    public void remove(T key, T value) {
         if(this.first == null) {
             return;
         }
@@ -32,8 +34,8 @@ public class Dictionary implements IDictionary {
             this.first = this.first.getNext();
             return;
         }
-        DictionaryNode backup = null;
-        DictionaryNode candidate = this.first;
+        GenericDictionaryNode<T> backup = null;
+        GenericDictionaryNode<T> candidate = this.first;
         while(candidate.getNext() != null) {
             if(candidate.getKey() == key && candidate.getValue() == value) {
                 backup.setNext(candidate.getNext());
@@ -48,9 +50,9 @@ public class Dictionary implements IDictionary {
     }
 
     @Override
-    public Set getKeys() {
-        Set keySet = new Set();
-        DictionaryNode candidate = this.first;
+    public GenericSet<T> getKeys() {
+        GenericSet<T> keySet = new GenericSet<>();
+        GenericDictionaryNode<T> candidate = this.first;
         while(candidate != null) {
             keySet.add(candidate.getKey());
             if(candidate.getNext() != null) {
@@ -61,8 +63,8 @@ public class Dictionary implements IDictionary {
     }
 
     @Override
-    public int getValue(int key) {
-        DictionaryNode candidate = this.first;
+    public T getValue(T key) throws Error {
+        GenericDictionaryNode<T> candidate = this.first;
         while(candidate != null) {
             if(candidate.getKey() == key) {
                 return candidate.getValue();
@@ -72,7 +74,7 @@ public class Dictionary implements IDictionary {
                 candidate = candidate.getNext();
             }
         }
-        return -1; // Error
+        return null; // Error
     }
 
     @Override
@@ -80,11 +82,11 @@ public class Dictionary implements IDictionary {
         return size == 0;
     }
 
-    private DictionaryNode indexOfKey(int key) {
+    private GenericDictionaryNode<T> indexOfKey(T key) {
         if(this.first == null) {
             return null;
         }
-        DictionaryNode candidate = this.first;
+        GenericDictionaryNode<T> candidate = this.first;
         while(candidate.getNext() != null) {
             if(candidate.getKey() == key) {
                 return candidate;
