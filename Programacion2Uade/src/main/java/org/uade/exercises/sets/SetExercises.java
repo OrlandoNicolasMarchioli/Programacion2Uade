@@ -21,9 +21,12 @@ public class SetExercises {
     public static void main(String[] args) {
         GenericSet<Integer> set1 = generateGenericSet(4);
         GenericSet<Integer> set2 = generateGenericSet(6);
+        GenericSet<Integer> set1BackUp = setAlgorithms.copy(set1);
+        GenericSet<Integer> set2BackUp = setAlgorithms.copy(set2);
         System.out.println("The sets are: " + set1 + set2);
         System.out.println("The symmetric difference between sets is: " + symmetricDifference(set1, set2));
-
+        set1 = set1BackUp;
+        set2 = set2BackUp;
         System.out.println();
 
         System.out.println("The sets are: " + set1() + set2());
@@ -52,8 +55,6 @@ public class SetExercises {
 
     public static GenericSet<Integer> symmetricDifference(GenericSet<Integer> set1, GenericSet<Integer> set2) {
         GenericSet<Integer> symmetricSet = new GenericSet<>();
-        GenericSet<Integer> set1BackUp = setAlgorithms.copy(set1);
-        GenericSet<Integer> set2BackUp = setAlgorithms.copy(set2);
 
         List<Integer> set1Values = setAlgorithms.setToArray(set1);
         List<Integer> set2Values = setAlgorithms.setToArray(set2);
@@ -72,14 +73,12 @@ public class SetExercises {
             }
             count++;
         }
-        set1 = set1BackUp;
-        set2 = set2BackUp;
 
         return symmetricSet;
     }
 
     public static boolean equalSets(GenericSet<Integer> set1, GenericSet<Integer> set2) {
-        boolean areEquals = false;
+        boolean areEquals = true;
         GenericSet<Integer> set1BackUp = setAlgorithms.copy(set1);
         GenericSet<Integer> set2BackUp = setAlgorithms.copy(set2);
 
@@ -89,13 +88,12 @@ public class SetExercises {
         Collections.sort(set2Values);
         if (set1Values.size() == set2Values.size()) {
             for (int i = 0; i < set1Values.size(); i++) {
-                if (set2Values.get(i) == set1Values.get(i)) {
-                    areEquals = true;
-                } else if (set2Values.get(i) != set1Values.get(i)) {
+                if (set2Values.get(i) != set1Values.get(i)) {
                     areEquals = false;
-                    return areEquals;
                 }
             }
+        } else {
+            areEquals = false;
         }
         set1 = set1BackUp;
         set2 = set2BackUp;
