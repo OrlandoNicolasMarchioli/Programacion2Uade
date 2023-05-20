@@ -1,9 +1,12 @@
-package org.uade.adt.definitions;
+package org.uade.dynamic.definitions;
+
+import org.uade.adt.definitions.ISet;
+import org.uade.dynamic.GenericSet;
 
 /**
  * Precondicion: para usar cualquier de estos metodos la estructura debe estar inicializada.
  */
-public interface IMultipleDictionary {
+public interface IGenericMultipleDictionary<T> {
 
     /**
      * Agrega un valor a una key, y de existir no hace nada.
@@ -11,7 +14,7 @@ public interface IMultipleDictionary {
      * @param key   -
      * @param value -
      */
-    void add(int key, int value);
+    void add(T key, T value);
 
     /**
      * Si una key que no existe, o un value que no existe esta asociado
@@ -22,12 +25,12 @@ public interface IMultipleDictionary {
      * @param key   -
      * @param value -
      */
-    void remove(int key, int value);
+    void remove(T key, T value);
 
     /**
      * @return conjunto con todas las claves del diccionario
      */
-    ISet getKeys();
+    GenericSet<T> getKeys();
 
     /**
      * Devuelve los valores asociados a una key.
@@ -36,7 +39,7 @@ public interface IMultipleDictionary {
      * @param key -
      * @return values asociados al key
      */
-    ISet getValues(int key);
+    GenericSet<T> getValues(T key);
 
     /**
      * @return <code>true</code> si el diccionario esta vacio, <code>false</code> en otro caso.
