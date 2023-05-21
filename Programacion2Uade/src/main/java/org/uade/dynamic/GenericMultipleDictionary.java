@@ -1,10 +1,11 @@
 package org.uade.dynamic;
 
+import lombok.ToString;
 import org.uade.adt.definitions.ISet;
 import org.uade.adt.node.MultipleDictionaryNode;
 import org.uade.dynamic.definitions.IGenericMultipleDictionary;
 import org.uade.dynamic.node.GenericMultipleDictionaryNode;
-
+@ToString
 public class GenericMultipleDictionary<T> implements IGenericMultipleDictionary<T> {
     private GenericMultipleDictionaryNode<T> first;
     @Override

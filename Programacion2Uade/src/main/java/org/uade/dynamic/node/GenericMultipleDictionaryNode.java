@@ -1,8 +1,9 @@
 package org.uade.dynamic.node;
 
+import lombok.ToString;
 import org.uade.adt.definitions.ISet;
 import org.uade.dynamic.GenericSet;
-
+@ToString
 public class GenericMultipleDictionaryNode<T> {
 
     private T key;
