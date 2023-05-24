@@ -16,13 +16,22 @@ public class GenericDictionary<T> implements IGenericDictionary<T> {
 
     @Override
     public void add(T key, T value) {
+        if (this.first == null) {
+            this.first = new GenericDictionaryNode<>(key, value, null);
+            this.size++;
+            return;
+        }
         GenericDictionaryNode<T> index = indexOfKey(key);
         if (index != null) {
             index.setValue(value); // Si la key ya existe, se reemplaza el value
             return;
         }
-        index.setNext(new GenericDictionaryNode<T>(key, value, null));
-        size++;
+        GenericDictionaryNode<T> lastNode = this.first;
+        while (lastNode.getNext() != null) {
+            lastNode = lastNode.getNext();
+        }
+        lastNode.setNext(new GenericDictionaryNode<>(key, value, null));
+        this.size++;
     }
 
     @Override
@@ -46,6 +55,7 @@ public class GenericDictionary<T> implements IGenericDictionary<T> {
         }
         if(candidate.getKey() == key && candidate.getValue() == value) {
             backup.setNext(null);
+            this.size--;
         }
     }
 
@@ -53,11 +63,9 @@ public class GenericDictionary<T> implements IGenericDictionary<T> {
     public GenericSet<T> getKeys() {
         GenericSet<T> keySet = new GenericSet<>();
         GenericDictionaryNode<T> candidate = this.first;
-        while(candidate != null) {
+        while (candidate != null) {
             keySet.add(candidate.getKey());
-            if(candidate.getNext() != null) {
-                candidate = candidate.getNext();
-            }
+            candidate = candidate.getNext();
         }
         return keySet;
     }
