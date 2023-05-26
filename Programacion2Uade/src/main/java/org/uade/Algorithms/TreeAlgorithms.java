@@ -8,12 +8,12 @@ import java.util.Random;
 
 public class TreeAlgorithms<T> {
 
-    public static BinaryTree generateBinaryTree(int range){
+    public static BinaryTree generateBinaryTree(int range) {
         BinaryTree binaryTree = new BinaryTree();
         binaryTree.create(5);
         int value = new Random().nextInt(20);
         for (int i = 0; i < range; i++) {
-            binaryTree = addRecursive(binaryTree,value);
+            binaryTree = addRecursive(binaryTree, value);
         }
         return binaryTree;
     }
@@ -28,10 +28,10 @@ public class TreeAlgorithms<T> {
 
         if (value < current.getValue()) {
             current.addLeft(value);
-            addRecursive(current,rValue);
+            addRecursive(current, rValue);
         } else if (value > current.getValue()) {
             current.addRight(value);
-            addRecursive(current,rValue);
+            addRecursive(current, rValue);
         } else {
             // value already exists
             return current;
@@ -42,44 +42,48 @@ public class TreeAlgorithms<T> {
 
     public static int travelIntoTheBinaryTreeAndSumValues(BinaryTree binaryTree, int sumOfValues) {
         if (binaryTree.getLeft() != null && binaryTree.getRight() != null) {
-            if(binaryTree.getLeft().getLeft() != null || binaryTree.getLeft().getRight() != null){
-                if(binaryTree.getLeft().getLeft() != null){
+            if (binaryTree.getLeft().getLeft() != null || binaryTree.getLeft().getRight() != null) {
+                if (binaryTree.getLeft().getLeft() != null) {
                     sumOfValues = sumOfValues + binaryTree.getLeft().getValue();
                     BinaryTree newBranch = binaryTree.getLeft();
                     return travelIntoTheBinaryTreeAndSumValues(newBranch, sumOfValues);
-                }if(binaryTree.getLeft().getRight() != null){
+                }
+                if (binaryTree.getLeft().getRight() != null) {
                     sumOfValues = sumOfValues + binaryTree.getRight().getValue();
                     BinaryTree newBranch = binaryTree.getRight();
                     return travelIntoTheBinaryTreeAndSumValues(newBranch, sumOfValues);
                 }
             }
-            if(binaryTree.getRight().getLeft() != null || binaryTree.getRight().getRight() != null){
-                if(binaryTree.getRight().getLeft() != null){
+            if (binaryTree.getRight().getLeft() != null || binaryTree.getRight().getRight() != null) {
+                if (binaryTree.getRight().getLeft() != null) {
                     sumOfValues = sumOfValues + binaryTree.getRight().getValue();
                     BinaryTree newBranch = binaryTree.getLeft();
                     return travelIntoTheBinaryTreeAndSumValues(newBranch, sumOfValues);
-                }if(binaryTree.getRight().getRight() != null){
+                }
+                if (binaryTree.getRight().getRight() != null) {
                     sumOfValues = sumOfValues + binaryTree.getRight().getValue();
                     BinaryTree newBranch = binaryTree.getRight();
                     return travelIntoTheBinaryTreeAndSumValues(newBranch, sumOfValues);
                 }
             }
         } else if (binaryTree.getRight() != null && binaryTree.getLeft() == null) {
-            if(binaryTree.getRight().getLeft() != null){
+            if (binaryTree.getRight().getLeft() != null) {
                 sumOfValues = sumOfValues + binaryTree.getRight().getValue();
                 BinaryTree newBranch = binaryTree.getLeft();
                 return travelIntoTheBinaryTreeAndSumValues(newBranch, sumOfValues);
-            }if(binaryTree.getRight().getRight() != null){
+            }
+            if (binaryTree.getRight().getRight() != null) {
                 sumOfValues = sumOfValues + binaryTree.getRight().getValue();
                 BinaryTree newBranch = binaryTree.getRight();
                 return travelIntoTheBinaryTreeAndSumValues(newBranch, sumOfValues);
             }
-        } else if (binaryTree.getLeft() != null  && binaryTree.getRight() == null) {
-            if(binaryTree.getLeft().getLeft() != null){
+        } else if (binaryTree.getLeft() != null && binaryTree.getRight() == null) {
+            if (binaryTree.getLeft().getLeft() != null) {
                 sumOfValues = sumOfValues + binaryTree.getLeft().getValue();
                 BinaryTree newBranch = binaryTree.getLeft();
                 return travelIntoTheBinaryTreeAndSumValues(newBranch, sumOfValues);
-            }if(binaryTree.getLeft().getRight() != null){
+            }
+            if (binaryTree.getLeft().getRight() != null) {
                 sumOfValues = sumOfValues + binaryTree.getRight().getValue();
                 BinaryTree newBranch = binaryTree.getRight();
                 return travelIntoTheBinaryTreeAndSumValues(newBranch, sumOfValues);
@@ -87,8 +91,31 @@ public class TreeAlgorithms<T> {
         }
         return sumOfValues;
     }
+    public static int travelInsideTheTreeToGetTheLowerValue(BinaryTree binaryTree, int lowerValue) {
+        if (binaryTree.getLeft() != null) {
 
-    public static BinaryTree generateHardcodedBinaryTree(){
+            if (binaryTree.getLeft().getLeft() != null) {
+                if(binaryTree.getLeft().getValue() < lowerValue){
+                    lowerValue = binaryTree.getLeft().getValue();
+                }
+                BinaryTree newBranch = binaryTree.getLeft();
+                return travelInsideTheTreeToGetTheLowerValue(newBranch, lowerValue);
+            }
+            if (binaryTree.getLeft().getRight() != null && binaryTree.getLeft().getRight().getValue() < lowerValue) {
+                if(binaryTree.getLeft().getValue() < lowerValue){
+                    lowerValue = binaryTree.getLeft().getValue();
+                }
+                BinaryTree newBranch = binaryTree.getRight();
+                return travelInsideTheTreeToGetTheLowerValue(newBranch, lowerValue);
+            }
+            if(binaryTree.getLeft().getValue() < lowerValue){
+                lowerValue = binaryTree.getLeft().getValue();
+            }
+        }
+        return lowerValue;
+    }
+
+    public static BinaryTree generateHardcodedBinaryTree() {
         BinaryTree binaryTree = new BinaryTree();
         binaryTree.create(5);
         int value = new Random().nextInt(20);

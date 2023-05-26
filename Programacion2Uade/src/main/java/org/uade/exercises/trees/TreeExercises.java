@@ -9,8 +9,10 @@ public class TreeExercises {
     public static void main(String[] args) {
         BinaryTree binaryTree = generateHardcodedBinaryTree();
         System.out.println(binaryTree);
-        System.out.println("The sum of the binary tree nodes is: " + sumBinaryTreeNodes(binaryTree));
-        System.out.println("The multiplication of the sum of all the values of the nodes by the smallest value of the nodes is: ");
+        int sumOfNodeValues = sumBinaryTreeNodes(binaryTree);
+        System.out.println("The sum of the binary tree nodes is: " + sumOfNodeValues);
+        int lowerNodeValues = getTheLowerValueOfTheTree(binaryTree);
+        System.out.println("The multiplication of the sum of all the values of the nodes by the smallest value of the nodes is: " + sumOfNodeValues * lowerNodeValues);
     }
 
     /**
@@ -26,9 +28,13 @@ public class TreeExercises {
         int rootValue = binaryTree.getValue();
         sumOfLeftNodeValues = travelIntoTheBinaryTreeAndSumValues(binaryTree.getLeft(), binaryTree.getLeft().getValue());
         sumOfRightNodeValues = travelIntoTheBinaryTreeAndSumValues(binaryTree.getRight(), binaryTree.getRight().getValue());
-        int total = rootValue + sumOfRightNodeValues + sumOfLeftNodeValues;
+        return rootValue + sumOfRightNodeValues + sumOfLeftNodeValues;
+    }
 
-        return total;
+    public static int getTheLowerValueOfTheTree(BinaryTree binaryTree) {
+        int firstLowerValue = binaryTree.getLeft().getValue();
+        int lowerValue = travelInsideTheTreeToGetTheLowerValue(binaryTree.getLeft(),firstLowerValue);
+        return lowerValue;
     }
 
 
