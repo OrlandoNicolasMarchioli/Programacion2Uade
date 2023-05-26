@@ -86,7 +86,7 @@ public class TreeAlgorithms<T> {
             }
         }
         return sumOfValues;
-    }git a
+    }
 
     public static BinaryTree generateHardcodedBinaryTree(){
         BinaryTree binaryTree = new BinaryTree();
