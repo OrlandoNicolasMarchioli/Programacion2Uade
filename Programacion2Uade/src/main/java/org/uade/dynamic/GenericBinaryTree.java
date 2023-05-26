@@ -17,7 +17,7 @@ public class GenericBinaryTree<T> implements IGenericBinaryTree<T> {
 
     @Override
     public void create(T value) {
-        this.root = new GenericBinaryTreeNode<>();
+        this.root = new GenericBinaryTreeNode<>(value,null,null);
     }
 
     @Override
