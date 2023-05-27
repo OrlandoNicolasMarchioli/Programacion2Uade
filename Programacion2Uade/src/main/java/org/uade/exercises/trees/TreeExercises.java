@@ -1,7 +1,6 @@
 package org.uade.exercises.trees;
 
 import org.uade.adt.BinaryTree;
-import org.uade.dynamic.GenericBinaryTree;
 
 import static org.uade.Algorithms.TreeAlgorithms.*;
 
@@ -13,6 +12,7 @@ public class TreeExercises {
         System.out.println("The sum of the binary tree nodes is: " + sumOfNodeValues);
         int lowerNodeValues = getTheLowerValueOfTheTree(binaryTree);
         System.out.println("The multiplication of the sum of all the values of the nodes by the smallest value of the nodes is: " + sumOfNodeValues * lowerNodeValues);
+        System.out.println("The high of the tree is: " + getBinaryTreeHigh(binaryTree));
     }
 
     /**
@@ -22,7 +22,7 @@ public class TreeExercises {
      * valor que se puede encontrar en una de las hojas del arbol.
      */
 
-    public static int sumBinaryTreeNodes(BinaryTree binaryTree) {
+    private static int sumBinaryTreeNodes(BinaryTree binaryTree) {
         int sumOfLeftNodeValues = 0;
         int sumOfRightNodeValues = 0;
         int rootValue = binaryTree.getValue();
@@ -31,11 +31,27 @@ public class TreeExercises {
         return rootValue + sumOfRightNodeValues + sumOfLeftNodeValues;
     }
 
-    public static int getTheLowerValueOfTheTree(BinaryTree binaryTree) {
+    private static int getTheLowerValueOfTheTree(BinaryTree binaryTree) {
         int firstLowerValue = binaryTree.getLeft().getValue();
-        int lowerValue = travelInsideTheTreeToGetTheLowerValue(binaryTree.getLeft(),firstLowerValue);
+        int lowerValue = travelInsideTheTreeToGetTheLowerValue(binaryTree.getLeft(), firstLowerValue);
         return lowerValue;
     }
+
+    /**
+     * 2. Ejercicio 2
+     * Desarrollar una funcion que reciba un AB y devuelva la altura maxima del mismo.
+     */
+
+    private static int getBinaryTreeHigh(BinaryTree binaryTree) {
+        int high = 0;
+        high = travelIntoTheBinaryTreeAndGetTheHigh(binaryTree, high);
+        return high + 1;
+    }
+
+    /**
+     * 3. Ejercicio 3
+     * Desarrollar una funcion que reciba un AB y devuelva verdadero si es un arbol perfecto.
+     */
 
 
 }
