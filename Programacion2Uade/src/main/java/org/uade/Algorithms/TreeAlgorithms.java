@@ -19,6 +19,13 @@ public class TreeAlgorithms<T> {
         return binaryTree;
     }
 
+    /**
+     * \TODO: resolve recurrent adding problem
+     *
+     * @param current
+     * @param value
+     * @return
+     */
     public static BinaryTree addRecursive(BinaryTree current, int value) {
         int rValue = new Random().nextInt(20);
         if (current == null) {
@@ -121,23 +128,48 @@ public class TreeAlgorithms<T> {
 
         if (binaryTree.getLeft() != null) {
             high = high + 1;
-            if(binaryTree.getLeft().getLeft() != null){
+            if (binaryTree.getLeft().getLeft() != null) {
                 return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getLeft(), high);
             }
-            if(binaryTree.getLeft().getRight() != null){
+            if (binaryTree.getLeft().getRight() != null) {
                 return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getRight(), high);
             }
         }
-        if(binaryTree.getRight() != null){
+        if (binaryTree.getRight() != null) {
             high = high + 1;
-            if(binaryTree.getRight().getLeft() != null){
+            if (binaryTree.getRight().getLeft() != null) {
                 return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getLeft(), high);
             }
-            if(binaryTree.getRight().getRight() != null){
+            if (binaryTree.getRight().getRight() != null) {
                 return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getRight(), high);
             }
         }
         return high;
+    }
+
+    public static boolean travelIntoTheBinaryTreeAndShowIfIsComplete(BinaryTree binaryTree, boolean isComplete) {
+
+        if (binaryTree.getLeft() != null && binaryTree.getRight() != null) {
+
+            if (binaryTree.getLeft().getLeft() == null && binaryTree.getLeft().getRight() != null || binaryTree.getLeft().getLeft() != null && binaryTree.getLeft().getRight() == null ||
+                    binaryTree.getRight().getLeft() == null && binaryTree.getRight().getRight() != null || binaryTree.getLeft().getLeft() != null && binaryTree.getRight().getRight() == null) {
+                isComplete = false;
+            }
+
+            if (binaryTree.getLeft().getLeft() != null) {
+                return travelIntoTheBinaryTreeAndShowIfIsComplete(binaryTree.getLeft(), isComplete);
+            }
+            if (binaryTree.getLeft().getRight() != null) {
+                return travelIntoTheBinaryTreeAndShowIfIsComplete(binaryTree.getRight(), isComplete);
+            }
+            if (binaryTree.getRight().getLeft() != null) {
+                return travelIntoTheBinaryTreeAndShowIfIsComplete(binaryTree.getLeft(), isComplete);
+            }
+            if (binaryTree.getRight().getRight() != null) {
+                return travelIntoTheBinaryTreeAndShowIfIsComplete(binaryTree.getRight(), isComplete);
+            }
+        }
+        return isComplete;
     }
 
     public static BinaryTree generateHardcodedBinaryTree() {
@@ -161,6 +193,40 @@ public class TreeAlgorithms<T> {
         secondLeftLeftLevel.addLeft(1);
         secondRightRightLevel.addRight(12);
         secondRightRightLevel.addLeft(8);
+
+        return binaryTree;
+    }
+
+    public static BinaryTree generateHardcodedCompleteBinaryTree() {
+        BinaryTree binaryTree = new BinaryTree();
+        binaryTree.create(10);
+
+        binaryTree.addLeft(6);
+        binaryTree.addRight(15);
+        BinaryTree firstLeftLevel = binaryTree.getLeft();
+        BinaryTree firstRightLevel = binaryTree.getRight();
+
+        firstLeftLevel.addLeft(4);
+        firstLeftLevel.addRight(8);
+
+        firstRightLevel.addLeft(13);
+        firstRightLevel.addRight(18);
+        BinaryTree secondLeftLeftLevel = firstLeftLevel.getLeft();
+        BinaryTree secondLeftRightLevel = firstLeftLevel.getRight();
+        BinaryTree secondRightLeftLevel = firstRightLevel.getLeft();
+        BinaryTree secondRightRightLevel = firstRightLevel.getRight();
+
+        secondLeftLeftLevel.addLeft(3);
+        secondLeftLeftLevel.addRight(5);
+
+        secondLeftRightLevel.addLeft(7);
+        secondLeftRightLevel.addRight(9);
+
+        secondRightLeftLevel.addRight(14);
+        secondRightLeftLevel.addLeft(12);
+
+        secondRightRightLevel.addRight(19);
+        secondRightRightLevel.addLeft(17);
 
         return binaryTree;
     }

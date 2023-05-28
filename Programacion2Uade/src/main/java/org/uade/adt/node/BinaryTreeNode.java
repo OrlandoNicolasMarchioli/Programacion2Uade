@@ -1,7 +1,9 @@
 package org.uade.adt.node;
 
+import lombok.ToString;
 import org.uade.adt.BinaryTree;
 
+@ToString
 public class BinaryTreeNode {
 
     private int value;

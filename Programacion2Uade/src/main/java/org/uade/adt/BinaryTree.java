@@ -1,8 +1,10 @@
 package org.uade.adt;
 
+import lombok.ToString;
 import org.uade.adt.definitions.IBinaryTree;
 import org.uade.adt.node.BinaryTreeNode;
 
+@ToString
 public class BinaryTree implements IBinaryTree {
 
     private BinaryTreeNode root;

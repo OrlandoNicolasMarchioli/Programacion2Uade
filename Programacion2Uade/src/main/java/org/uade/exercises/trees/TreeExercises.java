@@ -13,6 +13,10 @@ public class TreeExercises {
         int lowerNodeValues = getTheLowerValueOfTheTree(binaryTree);
         System.out.println("The multiplication of the sum of all the values of the nodes by the smallest value of the nodes is: " + sumOfNodeValues * lowerNodeValues);
         System.out.println("The high of the tree is: " + getBinaryTreeHigh(binaryTree));
+        System.out.println();
+        BinaryTree completeBinaryTree = generateHardcodedCompleteBinaryTree();
+        System.out.println("The binary tree is: " + completeBinaryTree);
+        System.out.println("The binary tree is complete?: " + binaryTreeIsComplete(completeBinaryTree));
     }
 
     /**
@@ -46,7 +50,7 @@ public class TreeExercises {
         int high = 1;
         int highOnLeftSide = travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getLeft(), high);
         int highOnRightSide = travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getRight(), high);
-        if(highOnLeftSide > highOnRightSide){
+        if (highOnLeftSide > highOnRightSide) {
             return highOnLeftSide + high;
         } else if (highOnRightSide > highOnLeftSide) {
             return highOnLeftSide + high;
@@ -56,8 +60,22 @@ public class TreeExercises {
 
     /**
      * 3. Ejercicio 3
-     * Desarrollar una funcion que reciba un AB y devuelva verdadero si es un arbol perfecto.
+     * Desarrollar una funcion que reciba un AB y devuelva verdadero si es un arbol esta completo (todos sus nodos tienen dos hijos).
      */
+
+    private static boolean binaryTreeIsComplete(BinaryTree binaryTree) {
+        boolean isComplete = true;
+        if (binaryTree.getRight() != null && binaryTree.getLeft() != null) {
+            boolean leftBranchIsComplete = travelIntoTheBinaryTreeAndShowIfIsComplete(binaryTree.getLeft(), isComplete);
+            boolean rightBranchIsComplete = travelIntoTheBinaryTreeAndShowIfIsComplete(binaryTree.getRight(), isComplete);
+            if (!leftBranchIsComplete || !rightBranchIsComplete) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return isComplete;
+    }
 
 
 }
