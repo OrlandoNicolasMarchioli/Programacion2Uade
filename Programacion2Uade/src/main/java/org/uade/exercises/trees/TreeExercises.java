@@ -43,9 +43,15 @@ public class TreeExercises {
      */
 
     private static int getBinaryTreeHigh(BinaryTree binaryTree) {
-        int high = 0;
-        high = travelIntoTheBinaryTreeAndGetTheHigh(binaryTree, high);
-        return high + 1;
+        int high = 1;
+        int highOnLeftSide = travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getLeft(), high);
+        int highOnRightSide = travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getRight(), high);
+        if(highOnLeftSide > highOnRightSide){
+            return highOnLeftSide + high;
+        } else if (highOnRightSide > highOnLeftSide) {
+            return highOnLeftSide + high;
+        }
+        return high + highOnLeftSide;
     }
 
     /**

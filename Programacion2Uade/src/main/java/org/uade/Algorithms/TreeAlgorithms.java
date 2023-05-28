@@ -118,28 +118,25 @@ public class TreeAlgorithms<T> {
     }
 
     public static int travelIntoTheBinaryTreeAndGetTheHigh(BinaryTree binaryTree, int high) {
-        if (binaryTree.getLeft() != null) {
-            //First do the left path
-            if (binaryTree.getLeft().getLeft() != null || binaryTree.getLeft().getRight() != null) {
-                high = high + 1;
-                if (binaryTree.getLeft().getLeft() != null) {
-                    return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getLeft(), high);
-                } else if (binaryTree.getLeft().getRight() != null) {
-                    return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getRight(), high);
-                }
-            }
-        }
-        if (binaryTree.getRight() != null) {
-            if (binaryTree.getRight().getLeft() != null || binaryTree.getRight().getRight() != null) {
-                high = high + 1;
-                if (binaryTree.getRight().getLeft() != null) {
-                    return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getLeft(), high);
-                } else if (binaryTree.getRight().getRight() != null) {
-                    return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getRight(), high);
-                }
-            }
-        }
 
+        if (binaryTree.getLeft() != null) {
+            high = high + 1;
+            if(binaryTree.getLeft().getLeft() != null){
+                return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getLeft(), high);
+            }
+            if(binaryTree.getLeft().getRight() != null){
+                return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getRight(), high);
+            }
+        }
+        if(binaryTree.getRight() != null){
+            high = high + 1;
+            if(binaryTree.getRight().getLeft() != null){
+                return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getLeft(), high);
+            }
+            if(binaryTree.getRight().getRight() != null){
+                return travelIntoTheBinaryTreeAndGetTheHigh(binaryTree.getRight(), high);
+            }
+        }
         return high;
     }
 
