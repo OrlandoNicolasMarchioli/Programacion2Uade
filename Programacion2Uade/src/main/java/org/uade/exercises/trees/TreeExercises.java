@@ -65,15 +65,13 @@ public class TreeExercises {
 
     private static boolean binaryTreeIsComplete(BinaryTree binaryTree) {
         boolean isComplete = true;
-        if (binaryTree.getRight() != null && binaryTree.getLeft() != null) {
-            boolean leftBranchIsComplete = travelIntoTheBinaryTreeAndShowIfIsComplete(binaryTree.getLeft(), isComplete);
-            boolean rightBranchIsComplete = travelIntoTheBinaryTreeAndShowIfIsComplete(binaryTree.getRight(), isComplete);
-            if (!leftBranchIsComplete || !rightBranchIsComplete) {
-                return false;
-            }
-        } else {
+
+        boolean leftBranchIsComplete = travelIntoTheBinaryTreeAndShowIfIsComplete(binaryTree.getLeft(), isComplete);
+        boolean rightBranchIsComplete = travelIntoTheBinaryTreeAndShowIfIsComplete(binaryTree.getRight(), isComplete);
+        if (!leftBranchIsComplete || !rightBranchIsComplete) {
             return false;
         }
+
         return isComplete;
     }
 
