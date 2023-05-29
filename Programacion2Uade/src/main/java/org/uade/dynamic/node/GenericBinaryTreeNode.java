@@ -8,6 +8,9 @@ public class GenericBinaryTreeNode<T> {
     private GenericBinaryTree left;
     private GenericBinaryTree right;
 
+    public GenericBinaryTreeNode(T value, GenericBinaryTree<T> left, GenericBinaryTree<T> right) {
+    }
+
     public void BinaryTreeNode(T value, GenericBinaryTree left, GenericBinaryTree right) {
         this.value = value;
         this.left = left;
