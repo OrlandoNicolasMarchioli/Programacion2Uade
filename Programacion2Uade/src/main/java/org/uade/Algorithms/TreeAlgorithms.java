@@ -2,6 +2,7 @@ package org.uade.Algorithms;
 
 import org.uade.adt.BinaryTree;
 import org.uade.adt.definitions.IBinaryTree;
+import org.uade.adt.definitions.IQueue;
 import org.uade.dynamic.GenericBinaryTree;
 import org.uade.dynamic.node.GenericBinaryTreeNode;
 
@@ -170,6 +171,15 @@ public class TreeAlgorithms<T> {
             }
         }
         return isComplete;
+    }
+
+    public static void  binaryTreeToQueue(IBinaryTree binaryTree, IQueue queue){
+        if (binaryTree == null || binaryTree.isEmpty()) {
+            return;
+        }
+        binaryTreeToQueue(binaryTree.getLeft(), queue);
+        queue.add(binaryTree.getValue());
+        binaryTreeToQueue(binaryTree.getRight(), queue);
     }
 
     public static BinaryTree generateHardcodedBinaryTree() {

@@ -4,6 +4,7 @@ import org.uade.Algorithms.SetAlgorithms;
 import org.uade.dynamic.GenericDictionary;
 import org.uade.dynamic.GenericMultipleDictionary;
 import org.uade.dynamic.GenericSet;
+import org.uade.dynamic.MultipleDictionary;
 
 import static org.uade.Algorithms.DictionaryAlgorithms.generateGenericMultipleDictionary;
 import static org.uade.Algorithms.DictionaryAlgorithms.sumDictionarySetValues;
@@ -24,6 +25,9 @@ public class DictionaryExercises {
         System.out.println(genericDictionary());
         System.out.println(genericMultipleDictionary());
         System.out.println("The dictionary´s keep relation?: " + keepRelation(genericMultipleDictionary(), genericDictionary()));
+
+        GenericMultipleDictionary<Integer> dictionary = generateGenericMultipleDictionary(5);
+        System.out.println("My dictionary is: " + convertMultipleDictionaryToSimpleDictionary(dictionary));
 
     }
 
@@ -81,6 +85,48 @@ public class DictionaryExercises {
             }
         }
         return keepRelation;
+    }
+
+    /**
+     * 3.Se tiene como entrada un diccionario múltiple Md. Se pide escribir
+     * un método que, tomando como base el diccionario múltiple Md, produzca
+     * como salida un diccionario simple Ms con las mismas claves y con valores
+     * que son la suma de los valores contenidos en la clave correspondiente de
+     * Md.
+     *
+     * @return
+     */
+
+    private static GenericDictionary<Integer> convertMultipleDictionaryToSimpleDictionary(GenericMultipleDictionary<Integer> multipleDictionary) {
+        GenericDictionary<Integer> dictionary = new GenericDictionary<>();
+        GenericSet<Integer> keys = multipleDictionary.getKeys();
+        while (!keys.isEmpty()){
+            int key = keys.choose();
+            int sumOfValues = sumAllValuesOfSet(multipleDictionary.getValues(key));
+            dictionary.add(key,sumOfValues);
+            eliminateValuesOfDictionary(multipleDictionary,key);
+            keys.remove(key);
+        }
+        return dictionary;
+    }
+
+    private static int sumAllValuesOfSet(GenericSet<Integer> set){
+        int total = 0;
+        while(!set.isEmpty()){
+            int value = set.choose();
+            total = total + value;
+            set.remove(value);
+        }
+        return total;
+    }
+
+    private static void eliminateValuesOfDictionary(GenericMultipleDictionary<Integer> multipleDictionary, int key){
+        GenericSet<Integer> values = multipleDictionary.getValues(key);
+        while (!values.isEmpty()){
+            int value = values.choose();
+            multipleDictionary.remove(key,value);
+            values.remove(value);
+        }
     }
 
     private static GenericDictionary<Integer> genericDictionary() {
