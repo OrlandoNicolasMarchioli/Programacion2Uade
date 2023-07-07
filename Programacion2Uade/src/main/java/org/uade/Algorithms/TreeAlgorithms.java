@@ -1,6 +1,7 @@
 package org.uade.Algorithms;
 
 import org.uade.adt.BinaryTree;
+import org.uade.adt.Dictionary;
 import org.uade.adt.definitions.IBinaryTree;
 import org.uade.adt.definitions.IQueue;
 import org.uade.dynamic.GenericBinaryTree;
@@ -47,6 +48,47 @@ public class TreeAlgorithms<T> {
         }
 
         return current;
+    }
+
+    public static Dictionary getAncestorsPerNode(BinaryTree tree, Dictionary dictionary) {
+        if (tree.getLeft() != null && tree.getRight() == null) {
+            dictionary.add(tree.getValue(), getSumOfValues(tree.getLeft(),tree.getLeft().getValue()));
+            getAncestorsPerNode(tree.getLeft(), dictionary);
+        }
+        if (tree.getLeft() != null && tree.getRight() != null) {
+            if (tree.getLeft().getLeft() != null) {
+                dictionary.add(tree.getValue(), getSumOfValues(tree.getLeft(), tree.getLeft().getValue() + tree.getRight().getValue()));
+                getAncestorsPerNode(tree.getLeft(), dictionary);
+            }
+            if (tree.getLeft().getRight() != null) {
+                dictionary.add(tree.getValue(), getSumOfValues(tree.getLeft(), tree.getLeft().getValue() + tree.getRight().getValue()));
+                getAncestorsPerNode(tree.getLeft(), dictionary);
+            }
+            if (tree.getRight().getRight() != null) {
+                dictionary.add(tree.getValue(), getSumOfValues(tree.getRight(), tree.getLeft().getValue() + tree.getRight().getValue()));
+                getAncestorsPerNode(tree.getLeft(), dictionary);
+            }
+            if (tree.getRight().getLeft() != null) {
+                dictionary.add(tree.getValue(), getSumOfValues(tree.getRight(), tree.getLeft().getValue() + tree.getRight().getValue()));
+                getAncestorsPerNode(tree.getLeft(), dictionary);
+            }
+        }
+        if (tree.getRight() != null && tree.getLeft() == null) {
+            dictionary.add(tree.getValue(),  getSumOfValues(tree.getRight(),tree.getRight().getValue()));
+            getAncestorsPerNode(tree.getRight(), dictionary);
+        }
+        return dictionary;
+    }
+    public static int getSumOfValues(IBinaryTree binaryTree, int sumOfValues) {
+        if (binaryTree.getLeft() != null) {
+            sumOfValues = sumOfValues + binaryTree.getLeft().getValue();
+            getSumOfValues(binaryTree.getLeft(), sumOfValues);
+        }
+        if (binaryTree.getRight() != null) {
+            sumOfValues = sumOfValues + binaryTree.getRight().getValue();
+            getSumOfValues(binaryTree.getRight(), sumOfValues);
+        }
+        return sumOfValues;
     }
 
     public static int travelIntoTheBinaryTreeAndSumValues(BinaryTree binaryTree, int sumOfValues) {

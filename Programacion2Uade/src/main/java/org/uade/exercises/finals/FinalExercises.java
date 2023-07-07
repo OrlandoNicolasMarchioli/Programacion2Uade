@@ -1,9 +1,10 @@
 package org.uade.exercises.finals;
 
+import org.uade.adt.BinaryTree;
 import org.uade.adt.Dictionary;
-import org.uade.adt.Graph;
-import org.uade.dynamic.GenericDictionary;
-import org.uade.dynamic.GenericSet;
+import org.uade.adt.definitions.IBinaryTree;
+
+import static org.uade.Algorithms.TreeAlgorithms.generateHardcodedBinaryTree;
 
 public class FinalExercises {
 
@@ -18,6 +19,9 @@ public class FinalExercises {
         System.out.println("The matrix has recursive vectors in all the nodes? " + verifyIfAllTheNodesHasAnRecursiveVertex(matrix));
         System.out.println();
         System.out.println("The count of input and output vectors per node is: " + numberOfEntryAndOutVectorsPerGraphNode(matrix));
+        System.out.println();
+        BinaryTree tree = generateHardcodedBinaryTree();
+        System.out.println("The dictionary of node ancestors is: " + getAllTheNodeAncestors(tree));
 
     }
 
@@ -60,21 +64,16 @@ public class FinalExercises {
     }
 
     public static boolean allTheNodesAreRecursive(AdjacencyMatrix matrix) {
-        int countOfNodes = matrix.getMatrix().length;
-        int recursiveNodes = 0;
+        boolean isRecursive = false;
         for (int i = 0; i < matrix.getMatrix()[0].length; i++) {
             for (int j = 0; j < matrix.getMatrix()[0].length; j++) {
                 if (i == j && matrix.getMatrix()[i][j] > 0) {
-                    recursiveNodes += 1;
+                    isRecursive = true;
                 }
             }
         }
 
-        if (recursiveNodes == countOfNodes) {
-            return true;
-        }
-
-        return false;
+        return isRecursive;
     }
 
     /**
@@ -89,7 +88,7 @@ public class FinalExercises {
     public static Dictionary travelIntoMatrixAndGetTheNodesConnections(AdjacencyMatrix matrix) {
         Dictionary nodesWithVectors = new Dictionary();
         nodesWithVectors = outputVectorsPerNode(matrix, nodesWithVectors);
-        nodesWithVectors = inputVectorsPerNode(matrix,nodesWithVectors);
+        nodesWithVectors = inputVectorsPerNode(matrix, nodesWithVectors);
         return nodesWithVectors;
     }
 
@@ -121,6 +120,70 @@ public class FinalExercises {
             }
         }
         return dictionary;
+    }
+
+    /**
+     * Dado un nodo n1, decimos que n2 es ancestro de n1 si n1 esta en alguna
+     * de las ramas de n2. Desarrolle un metodo estatico que reciba un ABB
+     * y devolver un Diccionario Simple donde cada clave del diccionario es un
+     * nodo que no es hoja, y como valor asociado a la clave la suma de los
+     * ancentros de este nodo.
+     */
+
+    public static Dictionary getAllTheNodeAncestors(BinaryTree binaryTree) {
+        int rootNode = binaryTree.getValue();
+
+        Dictionary dictionary = new Dictionary();
+        BinaryTree leftBinaryTree = binaryTree.getLeft();
+        BinaryTree rightBinaryTree = binaryTree.getRight();
+        dictionary = getAncestorsPerNode(leftBinaryTree, dictionary);
+        dictionary = getAncestorsPerNode(rightBinaryTree, dictionary);
+        int leftSum = dictionary.getValue(binaryTree.getLeft().getValue());
+        int rightSum = dictionary.getValue(binaryTree.getRight().getValue());
+        int sum = binaryTree.getValue() + leftSum + rightSum + binaryTree.getLeft().getValue() + binaryTree.getRight().getValue();
+        dictionary.add(rootNode, sum);
+        return dictionary;
+    }
+
+    public static Dictionary getAncestorsPerNode(BinaryTree tree, Dictionary dictionary) {
+        if (tree.getLeft() != null && tree.getRight() == null) {
+            dictionary.add(tree.getValue(), getSumOfValues(tree.getLeft(),tree.getLeft().getValue()));
+            getAncestorsPerNode(tree.getLeft(), dictionary);
+        }
+        if (tree.getLeft() != null && tree.getRight() != null) {
+            if (tree.getLeft().getLeft() != null) {
+                dictionary.add(tree.getValue(), getSumOfValues(tree.getLeft(), tree.getLeft().getValue() + tree.getRight().getValue()));
+                getAncestorsPerNode(tree.getLeft(), dictionary);
+            }
+            if (tree.getLeft().getRight() != null) {
+                dictionary.add(tree.getValue(), getSumOfValues(tree.getLeft(), tree.getLeft().getValue() + tree.getRight().getValue()));
+                getAncestorsPerNode(tree.getLeft(), dictionary);
+            }
+            if (tree.getRight().getRight() != null) {
+                dictionary.add(tree.getValue(), getSumOfValues(tree.getRight(), tree.getLeft().getValue() + tree.getRight().getValue()));
+                getAncestorsPerNode(tree.getLeft(), dictionary);
+            }
+            if (tree.getRight().getLeft() != null) {
+                dictionary.add(tree.getValue(), getSumOfValues(tree.getRight(), tree.getLeft().getValue() + tree.getRight().getValue()));
+                getAncestorsPerNode(tree.getLeft(), dictionary);
+            }
+        }
+        if (tree.getRight() != null && tree.getLeft() == null) {
+            dictionary.add(tree.getValue(),  getSumOfValues(tree.getRight(),tree.getRight().getValue()));
+            getAncestorsPerNode(tree.getRight(), dictionary);
+        }
+        return dictionary;
+    }
+    public static int getSumOfValues(IBinaryTree binaryTree, int sumOfValues) {
+        if (binaryTree.getLeft() != null) {
+            sumOfValues = sumOfValues + binaryTree.getLeft().getValue();
+            getSumOfValues(binaryTree.getLeft(), sumOfValues);
+        }
+        if (binaryTree.getRight() != null) {
+            sumOfValues = sumOfValues + binaryTree.getRight().getValue();
+            getSumOfValues(binaryTree.getRight(), sumOfValues);
+        }
+        return sumOfValues;
     }
 
 }

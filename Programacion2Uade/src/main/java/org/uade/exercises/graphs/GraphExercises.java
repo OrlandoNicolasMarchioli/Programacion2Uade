@@ -39,21 +39,12 @@ public class GraphExercises {
      * @return
      */
 
-//    public static boolean isUndirectedGraph(Graph graph){
-//        boolean isUndirected = travelIntoGraphAndSearchConnections(graph);
-//    }
-//
-//    public static boolean travelIntoGraphAndSearchConnections(Graph graph){
-//        ISet graphNodeKeys = graph.nodes();
-//        graph.
-//    }
-
     public static List<Integer> getReflexiveNodes(Graph graph) {
         List<Integer> reflexiveNodeIndexes = new ArrayList<>();
         ISet nodesBackUp = SetAlgorithms.copy(graph.nodes());
         List<Integer> listOfNodeKeys = SetAlgorithms.setToArray(nodesBackUp);
+        int key = graph.nodes().choose();
         for (int i = 0; i < listOfNodeKeys.size(); i++) {
-            int key = graph.nodes().choose();
             if(graph.edgeExists(key,key)){
                 reflexiveNodeIndexes.add(key);
                 graph.removeNode(key);
