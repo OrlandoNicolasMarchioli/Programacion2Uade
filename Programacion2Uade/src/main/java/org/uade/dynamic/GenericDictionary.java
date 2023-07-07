@@ -103,4 +103,12 @@ public class GenericDictionary<T> implements IGenericDictionary<T> {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "GenericDictionary{" +
+                "first=" + first +
+                ", size=" + size +
+                '}';
+    }
 }

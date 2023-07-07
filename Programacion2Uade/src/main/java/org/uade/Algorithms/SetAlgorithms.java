@@ -29,6 +29,23 @@ public class SetAlgorithms {
         return copy;
     }
 
+    public static ISet copy(ISet set) {
+        ISet copy = new Set();
+        ISet aux = new Set();
+        while (!set.isEmpty()) {
+            int value = set.choose();
+            aux.add(value);
+            set.remove(value);
+        }
+        while (!aux.isEmpty()) {
+            int value = aux.choose();
+            set.add(value);
+            copy.add(value);
+            aux.remove(value);
+        }
+        return copy;
+    }
+
     public static int calculateStackCount(GenericSet<Integer> set) {
         int count = 0;
         while (!set.isEmpty()) {
@@ -40,6 +57,16 @@ public class SetAlgorithms {
     }
 
     public static List<Integer> setToArray(GenericSet<Integer> set) {
+        List<Integer> array = new ArrayList();
+        while (!set.isEmpty()) {
+            int value = set.choose();
+            array.add(value);
+            set.remove(value);
+        }
+        return array;
+    }
+
+    public static List<Integer> setToArray(ISet set) {
         List<Integer> array = new ArrayList();
         while (!set.isEmpty()) {
             int value = set.choose();

@@ -147,4 +147,6 @@ public class Graph implements IGraph {
 
         return this.adjacencyMatrix[indexFrom][indexTo];
     }
+
+
 }
