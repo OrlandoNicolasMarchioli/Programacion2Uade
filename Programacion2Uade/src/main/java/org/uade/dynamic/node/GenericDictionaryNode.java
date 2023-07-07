@@ -13,4 +13,12 @@ public class GenericDictionaryNode<T> {
     private T value;
     private GenericDictionaryNode next;
 
+    @Override
+    public String toString() {
+        return "GenericDictionaryNode{" +
+                "key=" + key +
+                ", value=" + value +
+                ", next=" + next +
+                '}';
+    }
 }

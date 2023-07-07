@@ -102,4 +102,12 @@ public class Dictionary implements IDictionary {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return "Dictionary{" +
+                "first=" + first +
+                ", size=" + size +
+                '}';
+    }
 }

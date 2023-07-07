@@ -13,4 +13,12 @@ public class DictionaryNode {
     private int value;
     private DictionaryNode next;
 
+    @Override
+    public String toString() {
+        return "DictionaryNode{" +
+                "key=" + key +
+                ", value=" + value +
+                ", next=" + next +
+                '}';
+    }
 }
